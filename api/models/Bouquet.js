@@ -4,10 +4,12 @@ require ('./Item');
 
 const bouquetSchema = new Schema({
     name: String,
-    items: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Item',
-    }]
+    items: [
+        {
+            flower: String,
+            color: String,
+        }
+    ]
 })
 
 const Bouquet = mongoose.model("Bouquet", bouquetSchema)

@@ -5,17 +5,15 @@ require('./Flower');
 
 const itemSchema = new Schema({
     flower: {
-        type: Schema.Types.ObjectId,
-        ref: "Flower",
+        type: String,
         required: true,
     },
     color: {
-        type: Schema.Types.ObjectId,
-        ref: "Color",
+        type: String,
         required: true,
     }
     
 })
 
-// const Item = mongoose.model("Item", itemSchema)
-module.exports = itemSchema
+const Item = mongoose.model("Item", itemSchema)
+module.exports = Item

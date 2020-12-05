@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors');
+
 const flowerRouter = require('./routes/flowers');
 const colorRouter = require ('./routes/colors');
 const bouquets = require ('./routes/bouquets');
-const items = require ('./routes/items');
-// const bouquetRouter = require ('./routes/bouquets');
+
 const app = express();
+app.use(cors());
 //Bring in Mongoose
 const mongoose = require('mongoose');
 //Connection string to LOCAL DB
@@ -33,15 +35,23 @@ app.use(express.json({ extended: false }));
 app.use('/flowers', flowerRouter);
 app.use('/colors', colorRouter);
 
-// ***ITEM IS A SUBDOCUMENT
+// ***ITEM IS A REF
 // app.post('/items', items.createItem);
 
 app.get('/bouquets', bouquets.listBouquets);
 app.post('/bouquets', bouquets.createBouquet);
+// app.get('/bouquets/:bouquetId', bouquets.listBouquetItems);
 app.patch('/bouquets/:bouquetId', bouquets.editBouquet);
 
-// app.use('/bouquets', bouquetRouter);
+// This serves all files placed in the /public
+// directory (where gulp will build all React code)
+app.use(express.static('build'));
 
+// This route serves your index.html file (which
+// initializes React)
+app.get('*', function(req, res, next) {
+  res.sendFile(path.join(__dirname,'index.html'));
+});
 // Start server
 app.listen(PORT, () => {
   console.log(`Server on port ${PORT}`);

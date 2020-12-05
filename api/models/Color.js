@@ -8,4 +8,4 @@ const colorSchema = new Schema({
 })
 
 const Color = mongoose.model("Color", colorSchema)
-module.exports = Color
+module.exports = Color;
