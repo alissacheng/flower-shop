@@ -23,14 +23,20 @@ function FlowerShop( { bouquetId, bouquetName } ) {
             setFlowers(data);
         }
         fetchFlowers();
-    }, []);
 
-    const addToBouquet = (flowerName, flowerColors) => {
+        const fetchBouquetItems = async () => {
+            const response = await fetch(`http://localhost:5000/bouquets/${bouquetId}`, {
+                method:'GET',
+                headers: headers,
+            });
+            const data = await response.json();
+            setBouquetItems(data);
+        }
 
-        console.log("Add to cart", flowerName, flowerColors);
-        //check for bouquet ID
-        //create the item
-        //add item to bouquet
+        fetchBouquetItems();
+    }, [bouquetItems]);
+
+    const addToBouquet = (flowerName, flowerColors) => {   
         if(bouquetId){
             flowerColors.forEach(async(color)=> {
                 const body = {
@@ -38,38 +44,52 @@ function FlowerShop( { bouquetId, bouquetName } ) {
                     color,
                 }
 
-                //add to bouquet
-                const response = await fetch(`http://localhost:5000/bouquets/${bouquetId}`, {
-                    method: 'PATCH',
-                    headers,
-                    body: JSON.stringify(body),
+                let duplicate = false;
+                bouquetItems.forEach(item => {
+                    if(item.color === color && item.flower === flowerName){
+                        duplicate = true;
+                    }
                 })
 
-                const bouquetData = await response.json();
-                setBouquetItems(bouquetData.items)
-                console.log("bouquetItems data", bouquetData.items);
-                console.log("bouquet items", bouquetItems);
+                if(!duplicate){
+                    //add to bouquet
+                    const response = await fetch(`http://localhost:5000/bouquets/${bouquetId}`, {
+                        method: 'PATCH',
+                        headers,
+                        body: JSON.stringify(body),
+                    })
+
+                    const bouquetData = await response.json();
+                    setBouquetItems(bouquetData.items);
+                }
             })
         }else{
             console.log("select a bouquet first")
         }
     }
 
+    const toggleItems = (e) => {
+        e.preventDefault();
+        const bouquetItems = document.querySelector(".bouquet-items")
+        bouquetItems.classList.toggle("active");
+        e.target.classList.toggle("active");
+    }
+
     return (
-        <div>
-            <h2>Select a flower to add to your {bouquetName} bouquet</h2>
+        <section className="flower-shop">
+            <h2>Select flowers to add to your {bouquetName} bouquet</h2>
+            <button className="toggle-bouquet-items" onClick={toggleItems}>{bouquetName} items</button>
+            <div className="bouquet-items">
+                { bouquetItems.length > 0 ? bouquetItems.map((item, index)=> {
+                    return <p>{index + 1}. {item.color} {item.flower}</p>
+                }) : <p>No flowers added yet!</p>}
+            </div>
             <div className="flower-container">
                 {flowers.map(flower => {
                     return <Flower key={flower._id} {...flower} addToBouquet={addToBouquet}/>
                 })}
             </div>
-            <div className="bouquet-items">
-                <h3>{bouquetName} items:</h3>
-                {/* {bouquetItems.map((item, index)=> {
-                    return <p>{index + 1}. {item.color} {item.flower}</p>
-                })} */}
-            </div>
-        </div>
+        </section>
     );
 }
 

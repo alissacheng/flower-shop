@@ -42,6 +42,7 @@ app.get('/bouquets', bouquets.listBouquets);
 app.post('/bouquets', bouquets.createBouquet);
 // app.get('/bouquets/:bouquetId', bouquets.listBouquetItems);
 app.patch('/bouquets/:bouquetId', bouquets.editBouquet);
+app.get('/bouquets/:bouquetId', bouquets.listBouquetItems);
 
 // This serves all files placed in the /public
 // directory (where gulp will build all React code)

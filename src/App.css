@@ -1,11 +1,15 @@
+main,
+header {
+  padding: 15px;
+}
+
 .flower-container {
   display: flex;
   flex-wrap: wrap;
 }
 
 .flower-container__item {
-  width: 30%;
-  padding: 0 15px;
+  width: 25%;
 }
 
 .new-bouquet {
@@ -19,4 +23,40 @@
 
 .bouquet-options p {
   margin: 0 10px;
+}
+
+.bouquet-items {
+  display: none;
+  padding: 0 15px;
+  background: rgb(252, 252, 187);
+}
+
+.bouquet-items.active {
+  display: block;
+}
+
+.toggle-bouquet-items {
+  font-size: 16px;
+}
+
+.toggle-bouquet-items::after{
+  content:" +";
+  font-size: 20px;
+}
+
+.toggle-bouquet-items.active::after{
+  content:" -";
+  font-size: 20px;
+}
+
+.toggle-bouquet-items::before{
+  content:"View ";
+}
+
+.toggle-bouquet-items.active::before{
+  content:"Hide ";
+}
+
+.bouquet-list {
+  display: none;
 }

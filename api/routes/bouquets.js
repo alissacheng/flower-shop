@@ -13,6 +13,22 @@ module.exports = {
     listBouquets: (req, res) => {
         Bouquet.find().then(records => res.send(records));
     },
+
+    //GET bouquets
+    listBouquetItems: (req, res) => {
+        if (!req.params.bouquetId) {
+            res.status(400).json({message: "please select a bouquet"})
+        }else {
+
+            try{
+                const bouquetId = req.params.bouquetId;
+                Bouquet.findById(bouquetId).then(records => res.send(records.items));
+            }catch(err){
+                console.log(err);
+                res.status(500).json({message: 'internal server error'});
+            }
+        }
+    },
     //create bouquet
     createBouquet: (req, res) => {
         const bouquet = new Bouquet(req.body);
@@ -41,6 +57,7 @@ module.exports = {
                         bouquet.save()
                         .then(()=> res.json(bouquet))
                         .catch((error)=> res.sendStatus(500));
+
                     }
                 })
         }

@@ -1,27 +1,30 @@
 import React from 'react';
 
-const Flower = ({name, colors, scent, addToBouquet}) => (
+function Flower ({name, colors, scent, addToBouquet}) {
+
+    const submitFlowers = (event) => {
+        event.preventDefault();
+        const flowerColors = [];
+       
+        //Record which colors were selected
+        colors.forEach((color)=> {
+            const elementId = color + "-" + name
+            if(document.getElementById(elementId).checked) {
+                flowerColors.push(color)
+            }
+        })
+
+        //if at least one option has been checked then proceed to add to bouquet
+        if(flowerColors.length>0){
+            addToBouquet(name, flowerColors);
+        }
+    }
+
+    return(
     <div className='flower-container__item'>
         <h3>{name}</h3>
         <p>Scent: {scent}</p>
-        <form className="color-optionss" onSubmit={(event)=> {
-            event.preventDefault();
-            const flowerColors = []
-            let flowerCount = 0
-            //if at least one option has been checked then proceed
-            colors.forEach((color)=> {
-                const elementId = color + "-" + name
-                if(document.getElementById(elementId).checked) {
-                    flowerCount += 1
-                    flowerColors.push(color)
-                }
-            })
-
-            if(flowerCount>1){
-                console.log(flowerColors);
-                addToBouquet(name, flowerColors)
-            }
-        }}>
+        <form className="color-optionss">
             {colors.map((color)=>{
                 return (
                     <div key={color+"-"+name}>
@@ -30,9 +33,11 @@ const Flower = ({name, colors, scent, addToBouquet}) => (
                     </div>
                 )
             })}
-            <input type="submit" value="Add to Bouquet +"/>
+            {/* <input type="submit" value="Add to Bouquet +"/> */}
+            <button onClick={submitFlowers}>Add to Bouquet +</button>
         </form>
     </div>
-)
+    );
+};
 
 export default Flower;

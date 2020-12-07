@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import './App.css';
 
@@ -8,11 +8,25 @@ function App() {
 
   const [bouquetId, setBouquetId] = useState(null);
   const [bouquetName, setBouquetName] = useState(null);
+  const [bouquets, setBouquets] = useState()
 
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
     };
+
+  useEffect(()=> { 
+    const fetchBouquets = async () => {
+        const response = await fetch('http://localhost:5000/bouquets/', {
+            method:'GET',
+            headers: headers,
+        });
+        const data = await response.json();
+        setBouquets(data);
+    }
+
+      fetchBouquets();
+  }, [bouquetId, bouquets]);
 
   const createBouquet = async(event) => {
     event.preventDefault();
@@ -34,10 +48,21 @@ function App() {
       console.log("data", data);
       setBouquetName(bouquetName);
       setBouquetId(data._id)
+      document.getElementById("new-bouquet").style.display = "none";
   };
 
   const nameBouquet = () => {
     document.getElementById("new-bouquet").style.display = "block";
+  }
+
+  const listBouquets = () => {
+    document.getElementById("bouquet-list").style.display = "block";
+  }
+
+  const selectBouquet = (bouquet) => {
+    setBouquetId(bouquet._id);
+    setBouquetName(bouquet.name);
+    document.getElementById("bouquet-list").style.display = "none";
   }
 
   return (
@@ -49,18 +74,33 @@ function App() {
         <main>
           <section>
             {bouquetId ? 
-            <Link to="/add-flowers">Add flowers to your {bouquetName} bouquet!</Link> : 
+            <div>
+              <Link to="/add-flowers">Click here to add flowers to your {bouquetName} bouquet!</Link>
+            </div>
+            : null}
             <div className="bouquet-options">
-              <button onClick={nameBouquet}>Create a new bouquet</button> <p>OR</p> <button>Select a previous bouquet to edit!</button>
-            </div>}
+              <button onClick={nameBouquet}>Create a new bouquet</button> <p>OR</p> <button onClick={listBouquets}>Select a previous bouquet to edit!</button>
+            </div>
             <form className="new-bouquet" id="new-bouquet" onSubmit={createBouquet}>
               <label htmlFor="bouquet-name">Bouquet Name:</label>
               <input type="text" id="bouquet-name" name="bouquet-name"/>
               <input type="submit" value="Create bouquet!"/>
             </form>
+            <div className="bouquet-list" id="bouquet-list">
+              <h3>Your Bouquets:</h3>
+              {bouquets ? bouquets.map(item=> {
+                return(
+                  
+                    <Link to="/add-flowers"><button onClick={()=>{selectBouquet(item)}}>{item.name}</button></Link>
+                )
+              })
+              : null}
+            </div>
           </section>
+        {bouquetId ?
+        <Route path="/add-flowers" render={()=> <FlowerShop bouquetId={bouquetId} bouquetName={bouquetName} />}/> :
+        null}
         </main>
-        <Route path="/add-flowers" render={()=> <FlowerShop bouquetId={bouquetId} bouquetName={bouquetName} />}/>
       </div>
     </Router>
   );
