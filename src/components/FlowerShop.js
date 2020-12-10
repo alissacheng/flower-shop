@@ -81,7 +81,7 @@ function FlowerShop( { bouquetId, bouquetName } ) {
             <button className="toggle-bouquet-items" onClick={toggleItems}>{bouquetName} items</button>
             <div className="bouquet-items">
                 { bouquetItems.length > 0 ? bouquetItems.map((item, index)=> {
-                    return <p>{index + 1}. {item.color} {item.flower}</p>
+                    return <p><span className="delete-item">X</span>{index + 1}. {item.color} {item.flower}</p>
                 }) : <p>No flowers added yet!</p>}
             </div>
             <div className="flower-container">

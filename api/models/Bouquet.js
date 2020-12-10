@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-require ('./Item');
 
 const bouquetSchema = new Schema({
     name: String,

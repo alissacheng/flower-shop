@@ -19,7 +19,7 @@ function App() {
     const fetchBouquets = async () => {
         const response = await fetch('http://localhost:5000/bouquets/', {
             method:'GET',
-            headers: headers,
+            headers,
         });
         const data = await response.json();
         setBouquets(data);
@@ -31,10 +31,16 @@ function App() {
   const createBouquet = async(event) => {
     event.preventDefault();
     
-      const bouquetName = document.getElementById("bouquet-name").value;
-      //check if bouquet name already exists
-  
-      console.log(bouquetName);
+    const bouquetName = document.getElementById("bouquet-name").value;
+    //check if bouquet name already exists
+    let duplicate = false;
+    bouquets.forEach(item => {
+      if (item.name === bouquetName){
+        duplicate = true;
+      }
+    })
+
+    if(!duplicate || bouquetName !== '' || bouquetName !== ' '){
       const body = {
         name: bouquetName
       }
@@ -49,6 +55,11 @@ function App() {
       setBouquetName(bouquetName);
       setBouquetId(data._id)
       document.getElementById("new-bouquet").style.display = "none";
+    }else if(bouquetName === '' || bouquetName === ' '){
+      alert("Please enter a valid name for your bouquet");
+    }else{
+      alert("You already have a bouquet with that name. Please name it something unique.")
+    }
   };
 
   const nameBouquet = () => {

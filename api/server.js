@@ -30,17 +30,11 @@ app.use(express.json({ extended: false }));
 // TODO
 // Define Routes
 
-//localhost:5000/movies -> get stuff from DB code will run
-//This will allow our front end to write the code
 app.use('/flowers', flowerRouter);
 app.use('/colors', colorRouter);
 
-// ***ITEM IS A REF
-// app.post('/items', items.createItem);
-
 app.get('/bouquets', bouquets.listBouquets);
 app.post('/bouquets', bouquets.createBouquet);
-// app.get('/bouquets/:bouquetId', bouquets.listBouquetItems);
 app.patch('/bouquets/:bouquetId', bouquets.editBouquet);
 app.get('/bouquets/:bouquetId', bouquets.listBouquetItems);
 
