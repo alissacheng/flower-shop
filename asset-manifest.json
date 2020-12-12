@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/flower-shop/static/css/main.4cd8d500.chunk.css",
+    "main.js": "/flower-shop/static/js/main.ff546f28.chunk.js",
+    "main.js.map": "/flower-shop/static/js/main.ff546f28.chunk.js.map",
+    "runtime-main.js": "/flower-shop/static/js/runtime-main.6b35cd51.js",
+    "runtime-main.js.map": "/flower-shop/static/js/runtime-main.6b35cd51.js.map",
+    "static/js/2.9ca01ade.chunk.js": "/flower-shop/static/js/2.9ca01ade.chunk.js",
+    "static/js/2.9ca01ade.chunk.js.map": "/flower-shop/static/js/2.9ca01ade.chunk.js.map",
+    "static/js/3.4f10c3a7.chunk.js": "/flower-shop/static/js/3.4f10c3a7.chunk.js",
+    "static/js/3.4f10c3a7.chunk.js.map": "/flower-shop/static/js/3.4f10c3a7.chunk.js.map",
+    "index.html": "/flower-shop/index.html",
+    "static/css/main.4cd8d500.chunk.css.map": "/flower-shop/static/css/main.4cd8d500.chunk.css.map",
+    "static/js/2.9ca01ade.chunk.js.LICENSE.txt": "/flower-shop/static/js/2.9ca01ade.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6b35cd51.js",
+    "static/js/2.9ca01ade.chunk.js",
+    "static/css/main.4cd8d500.chunk.css",
+    "static/js/main.ff546f28.chunk.js"
+  ]
+}
