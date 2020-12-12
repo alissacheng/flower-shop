@@ -1,11 +1,4 @@
-// const express = require("express");
-// const router = express.Router();
 const Bouquet = require("../models/Bouquet");
-
-// router.get('/', async (req, res)=> {
-//     const bouquets = await Bouquet.find();
-//     res.json(bouquets);
-// });
 
 module.exports = {
     //GET bouquets
@@ -37,12 +30,11 @@ module.exports = {
         //add error message above
     },
     //add item to existing bouquet
-    editBouquet: (req, res) => {
+    addItem: (req, res) => {
         if (!req.params.bouquetId) {
             res.status(400).json({message: "please select a bouquet"})
         }else {
             const item = req.body;
-            console.log("item is", item)
             const bouquetId = req.params.bouquetId;
             //push into bouquet object
             Bouquet.findById(bouquetId)
@@ -59,6 +51,31 @@ module.exports = {
 
                     }
                 })
+        }
+    },
+
+    removeItem: (req, res)=> {
+        if (!req.params.bouquetId) {
+            res.status(400).json({message: "please select a bouquet"})
+        }else {
+            const item = req.body;
+            const bouquetId = req.params.bouquetId;
+            //push into bouquet object
+            Bouquet.findById(bouquetId)
+            .exec(function(err, bouquet){
+                if(err) {
+                    console.log('error retrieving bouquet by id!')
+                }else {
+                    bouquet.items.forEach((flowerItem, index)=> {
+                        if(flowerItem.flower === item.flower && flowerItem.color === item.color){
+                            bouquet.items.splice(index, 1);
+                            bouquet.save()
+                            .then(()=> res.json(bouquet))
+                            .catch((error)=> res.sendStatus(500));
+                        }
+                    })
+                }
+            })
         }
     }
 }

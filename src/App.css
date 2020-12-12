@@ -3,6 +3,10 @@ header {
   padding: 15px;
 }
 
+button {
+  cursor: pointer;
+}
+
 .flower-container {
   display: flex;
   flex-wrap: wrap;
@@ -27,8 +31,9 @@ header {
 
 .bouquet-items {
   display: none;
-  padding: 0 15px;
-  background: rgb(252, 252, 187);
+  padding: 15px;
+  width: 370px;
+  background: rgb(229, 228, 247);
 }
 
 .bouquet-items.active {
@@ -37,6 +42,16 @@ header {
 
 .toggle-bouquet-items {
   font-size: 16px;
+  width: 400px;
+  padding: 8px;
+  color: blue;
+  border-radius: 10px;
+  background-color: lavender;
+  border: none;
+}
+
+.toggle-bouquet-items.active {
+  border-radius: 10px 10px 0 0;
 }
 
 .toggle-bouquet-items::after{
@@ -59,4 +74,25 @@ header {
 
 .bouquet-list {
   display: none;
+}
+
+.bouquet-items__one {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.bouquet-items__one img {
+  width: 25px;
+  height: auto;
+}
+
+.bouquet-items__one button {
+  border: 2px solid rgb(96, 96, 213);
+  border-radius: 10px;
+  background: white;
+  padding: 3px;
+}
+
+.bouquet-items__one p {
+  margin: 5px;
 }

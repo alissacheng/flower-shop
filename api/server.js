@@ -35,7 +35,8 @@ app.use('/colors', colorRouter);
 
 app.get('/bouquets', bouquets.listBouquets);
 app.post('/bouquets', bouquets.createBouquet);
-app.patch('/bouquets/:bouquetId', bouquets.editBouquet);
+app.patch('/bouquets/:bouquetId', bouquets.addItem);
+app.patch('/bouquets/:bouquetId/remove', bouquets.removeItem);
 app.get('/bouquets/:bouquetId', bouquets.listBouquetItems);
 
 // This serves all files placed in the /public
