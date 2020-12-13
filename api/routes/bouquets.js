@@ -42,8 +42,7 @@ module.exports = {
                     if(err) {
                         console.log('error retrieving bouquet by id!')
                     }else {
-                        // check if item exists alreadyin bouquet and then push
-                        console.log(bouquet)
+                        // check if item exists alreadyin bouquet and then pushs
                         bouquet.items.push(item);
                         bouquet.save()
                         .then(()=> res.json(bouquet))

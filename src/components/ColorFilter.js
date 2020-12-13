@@ -59,7 +59,7 @@ function ColorFilter ({ colors, headers, setFlowers, fetchFlowers}){
             </div>
             <button onClick={applyFilter}>Apply</button>
             <button onClick={clearFilter}>X Clear All</button>
-            {filterColors.length > 1 ?
+            {filterColors.length > 0 ?
                 <div className="filters-applied">
                     <p>Filters applied: </p>
                     {filterColors.map((color)=> {
