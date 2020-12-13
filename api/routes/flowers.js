@@ -11,26 +11,31 @@ router.get('/', async (req, res)=> {
 
 //Add a new flower to database
 router.post('/add', async (req, res)=> {
-    const {name, colors, season, scent} = req.body;
+    try {
+        const {name, colors, season, scent} = req.body;
 
-    let flower;
-    if(req.body.scent) {
-        flower = new Flower ({
-            name,
-            colors,
-            season,
-            scent,
-        })
-    }else {
-        flower = new Flower ({
-            name,
-            colors,
-            season,
-        })
+        let flower;
+        if(req.body.scent) {
+            flower = new Flower ({
+                name,
+                colors,
+                season,
+                scent,
+            })
+        }else {
+            flower = new Flower ({
+                name,
+                colors,
+                season,
+            })
+        }
+    
+        const newFlower = await flower.save();
+        res.json(newFlower);
+    }catch(err){
+        console.log(err);
+        res.status(500).json({ message: 'flower not found' });
     }
-
-    const newFlower = await flower.save();
-    res.json(newFlower);
 })
 
 //Add flower object to a color based on color ID passed in param and vice versa

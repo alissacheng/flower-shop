@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Flower from './Flower';
+import BouquetItems from './BouquetItems';
 
 const headers = {
     Accept: "application/json",
@@ -95,30 +96,7 @@ function FlowerShop( { bouquetId, bouquetName } ) {
         <section className="flower-shop">
             <h2>Select flowers to add to your {bouquetName} bouquet</h2>
             <button className="toggle-bouquet-items" onClick={toggleItems}>{bouquetName} items</button>
-            <div className="bouquet-items">
-                { bouquetItems.length > 0 ? bouquetItems.map((item, index)=> {
-                    let flowerName = '';
-                    const flowerArray = item.flower.split('')
-
-                    if(flowerArray[flowerArray.length-1] === "s"){
-                        flowerName = item.flower
-                    }else if(flowerArray[flowerArray.length-1] === "y"){
-                        flowerArray.pop()
-                        flowerName = flowerArray.join('') + "ies";
-                    }else {
-                        flowerName = item.flower + "s" 
-                    }
-                    const colorArray = item.color.split('')
-                    const colorLetter = colorArray.shift().toUpperCase()
-                    const colorName = colorLetter + colorArray.join('')
-                    return (
-                        <div className="bouquet-items__one">
-                            <button className="flex-center" onClick={()=> {removeItem(item.flower, item.color)}}><img src="./trash.png" alt="trash icon"/></button>
-                            <p>{index + 1}. {colorName} {flowerName}</p>
-                        </div>
-                    )
-                }) : <p>No flowers added yet!</p>}
-            </div>
+            <BouquetItems bouquetItems={bouquetItems} removeItem={removeItem}/>
             <div className="flower-container">
                 {flowers.map(flower => {
                     return <Flower key={flower._id} {...flower} addToBouquet={addToBouquet}/>
