@@ -29,7 +29,7 @@ function BouquetItems({bouquetItems, removeItem}){
             const flowerName = pluralWord(item.flower)
             const colorName = firstLetterUpper(item.color)
             return (
-                <div className="bouquet-items__one">
+                <div className="bouquet-items__one" key={item.color+item.flower+(index+1)}>
                     <button className="flex-center" onClick={()=> {removeItem(item.flower, item.color)}}><img src="./trash.png" alt="trash icon"/></button>
                     <p>{index + 1}. {colorName} {flowerName}</p>
                 </div>

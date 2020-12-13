@@ -5,7 +5,7 @@ const Flower = require("../models/Flower");
 
 //Return all flower in database
 router.get('/', async (req, res)=> {
-    const flowers = await Flower.find();
+    const flowers = await Flower.find().sort({ name: 1 });
     res.json(flowers);
 });
 

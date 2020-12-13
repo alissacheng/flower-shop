@@ -54,6 +54,10 @@ button {
   border-radius: 10px 10px 0 0;
 }
 
+.bouquet-items {
+  border-radius: 0 0 10px 10px;
+}
+
 .toggle-bouquet-items::after{
   content:" +";
   font-size: 20px;
@@ -95,4 +99,27 @@ button {
 
 .bouquet-items__one p {
   margin: 5px;
+}
+
+.color-filter {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.color-filter > div {
+  width: 20%;
+}
+
+.swatch {
+  height: 15px;
+  width: 15px;
+  border-radius: 25px;
+}
+
+.filters-applied {
+  display: flex;
+}
+
+.filters-applied p {
+  margin-right: 10px;
 }

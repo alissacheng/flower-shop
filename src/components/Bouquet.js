@@ -40,24 +40,24 @@ function Bouquet() {
         })
 
         if(!duplicate || bouquetName !== '' || bouquetName !== ' '){
-        const body = {
-            name: bouquetName
-        }
-        const response = await fetch('http://localhost:5000/bouquets', {
-            method: 'POST',
-            headers,
-            body: JSON.stringify(body),
-        });
-    
-        const data = await response.json();
-        console.log("data", data);
-        setBouquetName(bouquetName);
-        setBouquetId(data._id)
-        document.getElementById("new-bouquet").style.display = "none";
+            const body = {
+                name: bouquetName
+            }
+            const response = await fetch('http://localhost:5000/bouquets', {
+                method: 'POST',
+                headers,
+                body: JSON.stringify(body),
+            });
+        
+            const data = await response.json();
+            console.log("data", data);
+            setBouquetName(bouquetName);
+            setBouquetId(data._id)
+            document.getElementById("new-bouquet").style.display = "none";
         }else if(bouquetName === '' || bouquetName === ' '){
-        alert("Please enter a valid name for your bouquet");
+            alert("Please enter a valid name for your bouquet");
         }else{
-        alert("You already have a bouquet with that name. Please name it something unique.")
+            alert("You already have a bouquet with that name. Please name it something unique.")
         }
     };
 
@@ -96,7 +96,7 @@ function Bouquet() {
                     {bouquets ? bouquets.map(item=> {
                     return(
                         
-                        <Link to="/add-flowers"><button onClick={()=>{selectBouquet(item)}}>{item.name}</button></Link>
+                        <Link to="/add-flowers" key={item.name}><button onClick={()=>{selectBouquet(item)}}>{item.name}</button></Link>
                     )
                     })
                     : null}

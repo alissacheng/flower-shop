@@ -33,7 +33,6 @@ function Flower ({name, colors, scent, addToBouquet}) {
                     </div>
                 )
             })}
-            {/* <input type="submit" value="Add to Bouquet +"/> */}
             <button onClick={submitFlowers}>Add to Bouquet +</button>
         </form>
     </div>

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const addressSchema = require('../../models/Address');
+const addressSchema = require('./Address');
 
 const userSchema = new Schema({
     username: { type: String, required: true, unique: true },

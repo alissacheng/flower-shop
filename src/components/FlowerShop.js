@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Flower from './Flower';
 import BouquetItems from './BouquetItems';
+import ColorFilter from './ColorFilter';
 
 const headers = {
     Accept: "application/json",
@@ -9,19 +10,34 @@ const headers = {
 
 function FlowerShop( { bouquetId, bouquetName } ) {
     const [flowers, setFlowers] = useState([]);
-    const [bouquetItems, setBouquetItems] = useState([])
+    const [bouquetItems, setBouquetItems] = useState([]);
+    const [colors, setColors] = useState([]);
 
-    useEffect(()=> { 
-        const fetchFlowers = async () => {
-            const response = await fetch('http://localhost:5000/flowers/', {
+    const fetchFlowers = async () => {
+        const response = await fetch('http://localhost:5000/flowers/', {
+            method:'GET',
+            headers: headers,
+        });
+        const data = await response.json();
+        setFlowers(data);
+    }
+
+    useEffect(()=> {
+        fetchFlowers();
+
+        const fetchColors = async () => {
+            const response = await fetch('http://localhost:5000/colors/', {
                 method:'GET',
                 headers: headers,
             });
             const data = await response.json();
-            setFlowers(data);
+            setColors(data);
         }
-        fetchFlowers();
 
+        fetchColors();
+    }, [])
+
+    useEffect(()=> { 
         const fetchBouquetItems = async () => {
             const response = await fetch(`http://localhost:5000/bouquets/${bouquetId}`, {
                 method:'GET',
@@ -95,8 +111,11 @@ function FlowerShop( { bouquetId, bouquetName } ) {
     return (
         <section className="flower-shop">
             <h2>Select flowers to add to your {bouquetName} bouquet</h2>
-            <button className="toggle-bouquet-items" onClick={toggleItems}>{bouquetName} items</button>
-            <BouquetItems bouquetItems={bouquetItems} removeItem={removeItem}/>
+            <div className="cart">
+                <button className="toggle-bouquet-items" onClick={toggleItems}>{bouquetName} items</button>
+                <BouquetItems bouquetItems={bouquetItems} removeItem={removeItem}/>
+            </div>
+            <ColorFilter colors={colors} headers={headers} setFlowers={setFlowers} fetchFlowers={fetchFlowers}/>
             <div className="flower-container">
                 {flowers.map(flower => {
                     return <Flower key={flower._id} {...flower} addToBouquet={addToBouquet}/>

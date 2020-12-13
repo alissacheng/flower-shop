@@ -4,13 +4,8 @@ const Color = require("../models/Color");
 
 //Return all flower in database
 router.get('/', async (req, res)=> {
-    try {
-        const colors = await Color.find();
-        res.json(colors);
-    }catch(err){
-        console.log(err);
-        res.status(500).json({ message: 'internal server error' });
-    }
+    const colors = await Color.find().sort({ name: 1 });
+    res.json(colors);
 });
 
 //Add a new flower to database
