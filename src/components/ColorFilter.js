@@ -63,7 +63,7 @@ function ColorFilter ({ colors, headers, setFlowers, fetchFlowers}){
                 <div className="filters-applied">
                     <p>Filters applied: </p>
                     {filterColors.map((color)=> {
-                        return <p>{color}</p>
+                        return <p key={color + "-filter"}>{color}</p>
                     })}
                 </div>
                 : null}

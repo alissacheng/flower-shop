@@ -48,7 +48,7 @@ function FlowerShop( { bouquetId, bouquetName } ) {
         }
 
         fetchBouquetItems();
-    }, [bouquetItems]);
+    }, [bouquetItems, bouquetId]);
 
     const addToBouquet = (flowerName, flowerColors) => {   
         if(bouquetId){
