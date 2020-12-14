@@ -14,7 +14,9 @@ module.exports = {
 
             try{
                 const bouquetId = req.params.bouquetId;
-                Bouquet.findById(bouquetId).then(records => res.send(records.items));
+                Bouquet.findById(bouquetId)
+                .then(records => res.send(records.items))
+                .catch((error)=> res.sendStatus(500));
             }catch(err){
                 console.log(err);
                 res.status(500).json({message: 'internal server error'});
@@ -29,6 +31,22 @@ module.exports = {
         .catch((error)=> res.sendStatus(500));
         //add error message above
     },
+
+    deleteBouquet: (req, res) => {
+        if(!req.params.bouquetId){
+            res.status(400).json({message: "please select a bouquet"})
+        }else {
+            const bouquetId = req.params.bouquetId;
+            Bouquet.findByIdAndDelete(bouquetId, function(err){
+                if(err){
+                    console.log(err)
+                }else {
+                    Bouquet.find().then(records => res.send(records));
+                }
+            })
+        }
+    },
+
     //add item to existing bouquet
     addItem: (req, res) => {
         if (!req.params.bouquetId) {

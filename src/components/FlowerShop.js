@@ -8,7 +8,7 @@ const headers = {
     "Content-Type": "application/json",
     };
 
-function FlowerShop( { bouquetId, bouquetName } ) {
+function FlowerShop( { bouquetId, bouquetName, deleteBouquet } ) {
     const [flowers, setFlowers] = useState([]);
     const [bouquetItems, setBouquetItems] = useState([]);
     const [colors, setColors] = useState([]);
@@ -43,8 +43,13 @@ function FlowerShop( { bouquetId, bouquetName } ) {
                 method:'GET',
                 headers: headers,
             });
-            const data = await response.json();
-            setBouquetItems(data);
+
+            if(!response.ok){
+                console.log("Cannot fetch items. Check if a bouquet has been selected.")
+            }else {
+                const data = await response.json();
+                setBouquetItems(data);
+            }
         }
 
         fetchBouquetItems();
@@ -111,6 +116,7 @@ function FlowerShop( { bouquetId, bouquetName } ) {
     return (
         <section className="flower-shop">
             <h2>Select flowers to add to your {bouquetName} bouquet</h2>
+            <button className="delete-bouquet" onClick={()=> {deleteBouquet(bouquetId)}}>Delete your {bouquetName} bouquet</button>
             <div className="cart">
                 <button className="toggle-bouquet-items" onClick={toggleItems}>{bouquetName} items</button>
                 <BouquetItems bouquetItems={bouquetItems} removeItem={removeItem}/>

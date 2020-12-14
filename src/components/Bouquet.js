@@ -75,6 +75,24 @@ function Bouquet() {
         document.getElementById("bouquet-list").style.display = "none";
     }
 
+    const deleteBouquet = async (bouquetId) => {
+        if(bouquetId){
+
+            const response = await fetch(`http://localhost:5000/bouquets/${bouquetId}`, {
+                method: 'DELETE',
+                headers,
+            })
+
+            const data = await response.json();
+            setBouquets(data);
+            setBouquetName(null);
+            setBouquetId(null);
+           
+        }else{
+            console.log("select a bouquet first")
+        }
+    }
+
     return (
         <main>
             <section>
@@ -103,7 +121,7 @@ function Bouquet() {
                 </div>
             </section>
             {bouquetId ?
-            <Route path="/add-flowers" render={()=> <FlowerShop bouquetId={bouquetId} bouquetName={bouquetName} />}/> :
+            <Route path="/add-flowers" render={()=> <FlowerShop bouquetId={bouquetId} bouquetName={bouquetName} deleteBouquet={deleteBouquet} />}/> :
             null}
         </main>
     );
